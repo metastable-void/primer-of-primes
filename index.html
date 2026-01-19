@@ -13,6 +13,11 @@ body {
 input, button {
 	font: inherit;
 }
+progress {
+	margin-inline: 0;
+	inline-size: 100%;
+	box-sizing: border-box;
+}
 #number {
 	display: block;
 	padding: .5rem;
@@ -40,6 +45,7 @@ input, button {
 <h1>整数の素因数分解</h1>
 <input type='number' id='number'>
 <button id='run'>実行</button>
+<progress id="progress"></progress>
 <div id='res'></div>
 <script>
 const factor = async (n) => {
@@ -52,6 +58,10 @@ const factor = async (n) => {
         console.log('factorization started');
         return;
       }
+	  if (typeof ev.data == 'number') {
+		prog.value = ev.data;
+		return;
+	  }
       worker.terminate();
       resolve(ev.data);
     };
@@ -64,6 +74,10 @@ const factor = async (n) => {
 const run = document.getElementById('run');
 const num = document.getElementById('number');
 const res = document.getElementById('res');
-run.onclick = () => {res.textContent = '';factor(num.value).then(v => {res.textContent = v.join(' × ')})};
+const prog = document.getElementById('progress');
+run.onclick = () => {
+	res.textContent = '';
+	factor(num.value).then(v => {res.textContent = v.join(' × ')});
+};
 
 </script>

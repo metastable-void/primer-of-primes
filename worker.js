@@ -1808,6 +1808,7 @@ const factor = input => {
               }
 
               console.log (smoothCounter, 'roots...');
+              self.postMessage(smoothCounter / k2);
             }
           }
         }
